@@ -26,5 +26,4 @@ enum UserIdType: string
     {
         return $this === self::SMS;
     }
-
 }

@@ -11,7 +11,7 @@ class MagicLogin
     {
         return MagicLoginToken::updateOrCreate([
             'user_identifier' => $user_identifier,
-            'user_id_type' => $user_id_type ?? UserIdType::EMAIL()
+            'user_id_type' => $user_id_type ?? UserIdType::EMAIL(),
         ], [
             'intended_url' => $intended_url,
         ]);
