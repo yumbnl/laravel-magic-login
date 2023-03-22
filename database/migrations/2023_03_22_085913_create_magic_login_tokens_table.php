@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Yumb\MagicLogin\Enums\UserIdType;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (env('DISABLE_REQUIRE_PRIMARY_KEY') !== null) {
+            DB::statement('SET SESSION sql_require_primary_key=0');
+        }
+
+        Schema::create('magic_login_tokens', function (Blueprint $table) {
+            $table->ulid('id');
+            $table->string('token');
+            $table->string('user_identifier');
+            $table->enum('user_id_type', [UserIdType::EMAIL(), UserIdType::SMS()]);
+            $table->string('intended_url')->nullable();
+            $table->timestamp('consumed_at')->nullable();
+            $table->timestamp('expires_at');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('magic_login_tokens');
+    }
+};

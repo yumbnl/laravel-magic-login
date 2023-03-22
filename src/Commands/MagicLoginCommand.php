@@ -3,16 +3,20 @@
 namespace Yumb\MagicLogin\Commands;
 
 use Illuminate\Console\Command;
+use Yumb\MagicLogin\Helpers\TokenGenerator;
+use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class MagicLoginCommand extends Command
 {
-    public $signature = 'laravel-magic-login';
+    public $signature = 'magic-login';
 
     public $description = 'My command';
 
     public function handle(): int
     {
-        $this->comment('All done');
+        $login_token = MagicLoginToken::factory()->make();
+
+        $this->comment('Token: '.$login_token->token);
 
         return self::SUCCESS;
     }

@@ -28,9 +28,7 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_laravel-magic-login_table.php.stub';
+        $migration = include __DIR__.'/../database/migrations/2023_03_22_085913_create_magic_login_tokens_table.php';
         $migration->up();
-        */
     }
 }
