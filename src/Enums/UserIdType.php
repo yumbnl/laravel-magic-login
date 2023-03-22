@@ -16,4 +16,15 @@ enum UserIdType: string
     {
         return self::SMS->value;
     }
+
+    public function isEmail(): bool
+    {
+        return $this === self::EMAIL;
+    }
+
+    public function isSms(): bool
+    {
+        return $this === self::SMS;
+    }
+
 }

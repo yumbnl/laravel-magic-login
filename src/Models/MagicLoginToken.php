@@ -42,5 +42,16 @@ class MagicLoginToken extends Model
                 $login_token->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
             }
         });
+
+        static::updating(function (MagicLoginToken $login_token) {
+            if(!isset($login_token->token))
+                $login_token->token = (new TokenGenerator)->getToken();
+
+            if(!isset($login_token->user_id_type))
+                $login_token->user_id_type = UserIdType::EMAIL();
+
+            if(!isset($login_token->expires_at))
+                $login_token->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
+        });
     }
 }

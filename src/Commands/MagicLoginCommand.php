@@ -3,7 +3,7 @@
 namespace Yumb\MagicLogin\Commands;
 
 use Illuminate\Console\Command;
-use Yumb\MagicLogin\Models\MagicLoginToken;
+use Yumb\MagicLogin\Facades\MagicLogin;
 
 class MagicLoginCommand extends Command
 {
@@ -13,7 +13,9 @@ class MagicLoginCommand extends Command
 
     public function handle(): int
     {
-        $login_token = MagicLoginToken::factory()->make();
+        // $login_token = MagicLoginToken::factory()->make();
+
+        $login_token = MagicLogin::getLoginToken(fake()->email());
 
         $this->comment('Token: '.$login_token->token);
 
