@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Helpers\TokenGenerator;
 
+/**
+ * Yumb\MagicLogin\Models\MagicLoginToken
+ *
+ * @property string $token
+ * @property string $user_identifier
+ * @property UserIdType $user_id_type
+ * @property string $intended_url
+ * @property Carbon $expires_at
+ */
 class MagicLoginToken extends Model
 {
     use HasFactory, HasUlids;
