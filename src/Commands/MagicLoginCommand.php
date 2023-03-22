@@ -15,7 +15,7 @@ class MagicLoginCommand extends Command
     {
         // $login_token = MagicLoginToken::factory()->make();
 
-        $login_token = MagicLogin::getLoginToken(fake()->email());
+        $login_token = MagicLogin::getToken(fake()->email());
 
         $this->comment('Token: '.$login_token->token);
 
