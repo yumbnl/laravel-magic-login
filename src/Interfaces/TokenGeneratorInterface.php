@@ -2,8 +2,7 @@
 
 namespace Yumb\MagicLogin\Interfaces;
 
-interface TokenGeneratorInterface {
-
+interface TokenGeneratorInterface
+{
     public function getToken(int $length): string;
-
 }

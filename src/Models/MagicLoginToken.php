@@ -2,12 +2,12 @@
 
 namespace Yumb\MagicLogin\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Helpers\TokenGenerator;
-use Carbon\Carbon;
 
 class MagicLoginToken extends Model
 {
@@ -30,14 +30,17 @@ class MagicLoginToken extends Model
     protected static function booted(): void
     {
         static::creating(function (MagicLoginToken $login_token) {
-            if(!isset($login_token->token))
+            if (! isset($login_token->token)) {
                 $login_token->token = (new TokenGenerator)->getToken();
+            }
 
-            if(!isset($login_token->user_id_type))
+            if (! isset($login_token->user_id_type)) {
                 $login_token->user_id_type = UserIdType::EMAIL();
+            }
 
-            if(!isset($login_token->expires_at))
+            if (! isset($login_token->expires_at)) {
                 $login_token->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
+            }
         });
     }
 }

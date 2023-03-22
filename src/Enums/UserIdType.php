@@ -16,5 +16,4 @@ enum UserIdType: string
     {
         return self::SMS->value;
     }
-
 }

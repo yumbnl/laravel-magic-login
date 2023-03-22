@@ -5,7 +5,6 @@ namespace Yumb\MagicLogin\Database\Factories;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Yumb\MagicLogin\Enums\UserIdType;
-use Yumb\MagicLogin\Helpers\TokenGenerator;
 use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class MagicLoginTokenFactory extends Factory
@@ -21,4 +20,3 @@ class MagicLoginTokenFactory extends Factory
         ];
     }
 }
-

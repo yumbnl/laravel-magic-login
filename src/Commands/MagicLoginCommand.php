@@ -3,7 +3,6 @@
 namespace Yumb\MagicLogin\Commands;
 
 use Illuminate\Console\Command;
-use Yumb\MagicLogin\Helpers\TokenGenerator;
 use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class MagicLoginCommand extends Command
