@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
-
+use Illuminate\Support\Carbon;
 use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsString;
@@ -33,21 +32,19 @@ it('creates a login token with correct amount of characters', function () {
 });
 
 it('validates a login token with valid token and user identification', function () {
-
     $login_token = MagicLogin::getToken(fake()->email());
 
     $verified = MagicLogin::verifyToken($login_token->user_identifier, $login_token->token);
-    
+
     assertTrue($verified->isValid());
 });
 
 it('invalidates an expired login token', function () {
-
     $login_token = MagicLogin::getToken(fake()->email());
 
     $this->travelTo(Carbon::now()->addMinutes(60));
 
     $verified = MagicLogin::verifyToken($login_token->user_identifier, $login_token->token);
-    
+
     assertTrue($verified->isExpired());
 });

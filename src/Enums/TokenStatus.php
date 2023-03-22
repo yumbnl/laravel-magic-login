@@ -32,7 +32,7 @@ enum TokenStatus: string
     {
         return $this === self::INVALID;
     }
-    
+
     public function isExpired(): bool
     {
         return $this === self::EXPIRED;

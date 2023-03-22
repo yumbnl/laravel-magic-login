@@ -24,11 +24,13 @@ class MagicLogin
                                 ->where('user_identifier', $user_identifier)
                                 ->first();
 
-        if( ! $login_token )
+        if (! $login_token) {
             return TokenStatus::INVALID;
+        }
 
-        if( $login_token->expires_at->isPast() )
+        if ($login_token->expires_at->isPast()) {
             return TokenStatus::EXPIRED;
+        }
 
         return TokenStatus::VALID;
     }
