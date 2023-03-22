@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Yumb\MagicLogin\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MagicLoginCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-magic-login';
 
     public $description = 'My command';
 
