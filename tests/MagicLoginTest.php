@@ -6,6 +6,7 @@ use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Facades\MagicLogin;
 
 use function Pest\Laravel\artisan;
+use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsString;
 use function PHPUnit\Framework\assertTrue;
@@ -23,4 +24,12 @@ it('can create a login token for a user with given email', function () {
     assertTrue($login_token->user_id_type->isEmail());
     assertIsString($login_token->token);
 
+});
+
+it('creates a login token with correct amount of characters', function () {
+    $email = fake()->email();
+
+    $login_token = MagicLogin::getLoginToken($email);
+
+    assertEquals(config('magic-login.token_length'), strlen($login_token->token));
 });
