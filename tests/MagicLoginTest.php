@@ -2,12 +2,11 @@
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
-use Yumb\MagicLogin\Events\TokenRequestedEvent;
-use Yumb\MagicLogin\Facades\MagicLogin;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsString;
 use function PHPUnit\Framework\assertTrue;
+use Yumb\MagicLogin\Events\TokenRequestedEvent;
+use Yumb\MagicLogin\Facades\MagicLogin;
 
 it('can create a login token for a user with given email', function () {
     $email = fake()->email();
@@ -39,7 +38,6 @@ it('dispatches an event when token has been requested', function () {
     Event::assertDispatched(TokenRequestedEvent::class, function ($e) use ($email) {
         return $e->login_token->user_identifier === $email;
     });
-
 });
 
 it('validates a login token with valid token and user identification', function () {

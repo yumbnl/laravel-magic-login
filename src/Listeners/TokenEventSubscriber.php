@@ -3,9 +3,7 @@
 namespace Yumb\MagicLogin\Listeners;
 
 use Illuminate\Events\Dispatcher;
-use Yumb\MagicLogin\Actions\SendTokenAction;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
-use Yumb\MagicLogin\Events\TokenRequestHandledEvent;
 
 class TokenEventSubscriber
 {

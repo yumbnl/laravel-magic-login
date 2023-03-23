@@ -6,15 +6,15 @@ use Carbon\Carbon;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class SendTokenEmailEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    
+
     public function __construct(
         public string $token,
         public string $email,
         public Carbon $expires_at
-    ) {}
+    ) {
+    }
 }

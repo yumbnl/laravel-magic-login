@@ -10,12 +10,11 @@ class MagicEventsServiceProvider extends EventServiceProvider
     protected $listen = [];
 
     protected $subscribe = [
-        TokenEventSubscriber::class
+        TokenEventSubscriber::class,
     ];
 
     public function boot()
     {
         parent::boot();
     }
-
 }
