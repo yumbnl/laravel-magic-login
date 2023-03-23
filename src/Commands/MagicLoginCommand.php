@@ -13,11 +13,7 @@ class MagicLoginCommand extends Command
 
     public function handle(): int
     {
-        // $login_token = MagicLoginToken::factory()->make();
-
-        $login_token = MagicLogin::getToken(fake()->email());
-
-        $this->comment('Token: '.$login_token->token);
+        $this->comment('Magic Login Token Rulez');
 
         return self::SUCCESS;
     }

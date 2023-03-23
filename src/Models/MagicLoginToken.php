@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Yumb\MagicLogin\Enums\UserIdType;
+use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Helpers\TokenGenerator;
 
 /**
@@ -52,6 +53,10 @@ class MagicLoginToken extends Model
             }
         });
 
+        static::created(function (MagicLoginToken $login_token) {
+            TokenRequestedEvent::dispatch($login_token);
+        });
+
         static::updating(function (MagicLoginToken $login_token) {
             if (! isset($login_token->token)) {
                 $login_token->token = (new TokenGenerator)->getToken();
@@ -64,6 +69,8 @@ class MagicLoginToken extends Model
             if (! isset($login_token->expires_at)) {
                 $login_token->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
             }
+
+            TokenRequestedEvent::dispatch($login_token);
         });
     }
 }
