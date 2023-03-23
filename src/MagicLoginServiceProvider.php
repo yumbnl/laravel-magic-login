@@ -2,11 +2,11 @@
 
 namespace Yumb\MagicLogin;
 
+use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Yumb\MagicLogin\Commands\MagicLoginCommand;
 use Yumb\MagicLogin\Http\Controllers\RequestTokenController;
-use Illuminate\Support\Facades\Route;
 
 class MagicLoginServiceProvider extends PackageServiceProvider
 {

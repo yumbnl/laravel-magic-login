@@ -3,7 +3,6 @@
 namespace Yumb\MagicLogin\Commands;
 
 use Illuminate\Console\Command;
-use Yumb\MagicLogin\Facades\MagicLogin;
 
 class MagicLoginCommand extends Command
 {

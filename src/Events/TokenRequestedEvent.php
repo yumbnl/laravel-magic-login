@@ -13,5 +13,6 @@ class TokenRequestedEvent
 
     public function __construct(
         public MagicLoginToken $login_token,
-    ) {}
+    ) {
+    }
 }

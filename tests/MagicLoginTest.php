@@ -1,14 +1,10 @@
 <?php
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
-
-use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsString;
 use function PHPUnit\Framework\assertTrue;
-use Yumb\MagicLogin\Commands\MagicLoginCommand;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Facades\MagicLogin;
 
@@ -31,7 +27,6 @@ it('creates a login token with correct amount of characters', function () {
 });
 
 it('dispatches an event when token has been requested', function () {
-
     Event::fake(TokenRequestedEvent::class);
 
     $email = fake()->email();
