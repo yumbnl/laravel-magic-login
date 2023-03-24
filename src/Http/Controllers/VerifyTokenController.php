@@ -18,7 +18,7 @@ class VerifyTokenController extends BaseController
             ['token', $validated['token']],
             ['user_udentifier', $validated['user_identifier']],
         ])
-                        ->latests()
+                        ->latest()
                         ->first();
 
         $status = MagicLogin::verifyToken($login_token);
