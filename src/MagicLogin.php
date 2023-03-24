@@ -23,7 +23,7 @@ class MagicLogin
 
     public function verifyToken(MagicLoginToken $login_token): TokenStatus
     {
-        throw_if(! $login_token, InvalidTokenException::class);
+        throw_if(! $login_token->exists, InvalidTokenException::class);
 
         if ($login_token->expires_at->isPast()) {
             $login_token->status = TokenStatus::EXPIRED;
@@ -38,9 +38,6 @@ class MagicLogin
 
             throw new InvalidUserIdException;
         }
-
-        $login_token->status = TokenStatus::VALID;
-        $login_token->save();
 
         return TokenStatus::VALID;
     }

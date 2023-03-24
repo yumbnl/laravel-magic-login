@@ -12,6 +12,7 @@ enum TokenStatus: string
     case VALID = 'valid';
     case INVALID = 'invalid';
     case EXPIRED = 'expired';
+    case CONSUMED = 'consumed';
     case INVALID_USERID = 'invalid_userid';
 
     public static function FRESH(): string
@@ -32,6 +33,11 @@ enum TokenStatus: string
     public static function EXPIRED(): string
     {
         return self::EXPIRED->value;
+    }
+
+    public static function CONSUMED(): string
+    {
+        return self::CONSUMED->value;
     }
 
     public static function INVALID_USERID(): string
@@ -57,6 +63,11 @@ enum TokenStatus: string
     public function isExpired(): bool
     {
         return $this === self::EXPIRED;
+    }
+
+    public function isConsumed(): bool
+    {
+        return $this === self::CONSUMED;
     }
 
     public function isInvalidUserId(): bool

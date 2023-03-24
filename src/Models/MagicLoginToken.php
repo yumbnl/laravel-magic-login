@@ -31,6 +31,7 @@ class MagicLoginToken extends Model
         'status',
         'intended_url',
         'expires_at',
+        'consumed_at',
     ];
 
     protected $casts = [
@@ -39,13 +40,6 @@ class MagicLoginToken extends Model
         'expires_at' => 'datetime',
         'consumed_at' => 'datetime',
     ];
-
-    public function expire(): bool
-    {
-        $this->consumed_at = Carbon::now();
-
-        return $this->save();
-    }
 
     protected static function booted(): void
     {
