@@ -7,9 +7,8 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Yumb\MagicLogin\Commands\MagicLoginCommand;
 use Yumb\MagicLogin\Http\Controllers\RequestTokenController;
-use Yumb\MagicLogin\Http\Controllers\VerifyTokenController;
 use Yumb\MagicLogin\Http\Controllers\RevokeTokenController;
-
+use Yumb\MagicLogin\Http\Controllers\VerifyTokenController;
 
 class MagicLoginServiceProvider extends PackageServiceProvider
 {
