@@ -46,7 +46,7 @@ class MagicLoginToken extends Model
     public function consume()
     {
         $this->consumed_at = Carbon::now();
-        $this->status = TokenStatus::CONSUMED();
+        $this->status = TokenStatus::CONSUMED;
         $this->save();
     }
 
