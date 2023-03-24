@@ -17,8 +17,10 @@ use Yumb\MagicLogin\Helpers\TokenGenerator;
  * @property string $token
  * @property string $user_identifier
  * @property string $user_id_type
+ * @property string $status
  * @property string $intended_url
  * @property Carbon $expires_at
+ * @property Carbon $consumed_at
  */
 class MagicLoginToken extends Model
 {
@@ -40,6 +42,13 @@ class MagicLoginToken extends Model
         'expires_at' => 'datetime',
         'consumed_at' => 'datetime',
     ];
+
+    public function consume()
+    {
+        $this->consumed_at = Carbon::now();
+        $this->status = TokenStatus::CONSUMED();
+        $this->save();
+    }
 
     protected static function booted(): void
     {

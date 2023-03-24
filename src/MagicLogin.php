@@ -5,7 +5,6 @@ namespace Yumb\MagicLogin;
 use Yumb\MagicLogin\Enums\TokenStatus;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Exceptions\ExpiredTokenException;
-use Yumb\MagicLogin\Exceptions\InvalidTokenException;
 use Yumb\MagicLogin\Exceptions\InvalidUserIdException;
 use Yumb\MagicLogin\Models\MagicLoginToken;
 
@@ -23,8 +22,6 @@ class MagicLogin
 
     public function verifyToken(MagicLoginToken $login_token): TokenStatus
     {
-        throw_if(! $login_token->exists, InvalidTokenException::class);
-
         if ($login_token->expires_at->isPast()) {
             $login_token->status = TokenStatus::EXPIRED;
             $login_token->save();
