@@ -2,9 +2,11 @@
 
 namespace Yumb\MagicLogin\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Yumb\MagicLogin\MagicLoginServiceProvider;
+use Yumb\MagicLogin\Tests\TestModels\User;
 
 class TestCase extends Orchestra
 {
@@ -27,8 +29,19 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        
+        // Use test User model for users provider
+        $app['config']->set('magic-login.user_model', User::class);
 
         $migration = include __DIR__.'/../database/migrations/2023_03_22_085913_create_magic_login_tokens_table.php';
         $migration->up();
+
+        $schema = $app['db']->connection()->getSchemaBuilder();
+
+        $schema->create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('email');
+            $table->softDeletes();
+        });
     }
 }

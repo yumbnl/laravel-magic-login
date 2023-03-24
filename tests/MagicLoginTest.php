@@ -1,12 +1,15 @@
 <?php
 
+use Yumb\MagicLogin\Tests\TestModels\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
+use Yumb\MagicLogin\Events\TokenRequestedEvent;
+use Yumb\MagicLogin\Exceptions\ExpiredTokenException;
+use Yumb\MagicLogin\Facades\MagicLogin;
+
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsString;
 use function PHPUnit\Framework\assertTrue;
-use Yumb\MagicLogin\Events\TokenRequestedEvent;
-use Yumb\MagicLogin\Facades\MagicLogin;
 
 it('can create a login token for a user with given email', function () {
     $email = fake()->email();
@@ -43,19 +46,21 @@ it('dispatches an event when token has been requested', function () {
 });
 
 it('validates a login token with valid token and user identification', function () {
-    $login_token = MagicLogin::createToken(fake()->email());
+    $user = User::create(['email' => fake()->email()]);
 
-    $verified = MagicLogin::verifyToken($login_token->user_identifier, $login_token->token);
+    $login_token = MagicLogin::createToken($user->email);
+
+    $verified = MagicLogin::verifyToken($login_token);
 
     assertTrue($verified->isValid());
 });
 
 it('invalidates an expired login token', function () {
+    $this->expectException(ExpiredTokenException::class);
+
     $login_token = MagicLogin::createToken(fake()->email());
 
     $this->travelTo(Carbon::now()->addMinutes(60));
 
-    $verified = MagicLogin::verifyToken($login_token->user_identifier, $login_token->token);
-
-    assertTrue($verified->isExpired());
+    MagicLogin::verifyToken($login_token);
 });

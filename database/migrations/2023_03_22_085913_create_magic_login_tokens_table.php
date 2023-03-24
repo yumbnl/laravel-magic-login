@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Yumb\MagicLogin\Enums\TokenStatus;
 use Yumb\MagicLogin\Enums\UserIdType;
 
 return new class extends Migration
@@ -23,7 +24,17 @@ return new class extends Migration
             $table->ulid('id');
             $table->string('token');
             $table->string('user_identifier');
-            $table->enum('user_id_type', [UserIdType::EMAIL(), UserIdType::SMS()]);
+            $table->enum('user_id_type', [
+                UserIdType::EMAIL(),
+                UserIdType::SMS()
+            ])->default(UserIdType::EMAIL());
+            $table->enum('status', [
+                TokenStatus::FRESH(),
+                TokenStatus::VALID(),
+                TokenStatus::INVALID(),
+                TokenStatus::INVALID_USERID(),
+                TokenStatus::EXPIRED()
+            ])->default(TokenStatus::FRESH());
             $table->string('intended_url')->nullable();
             $table->timestamp('consumed_at')->nullable();
             $table->timestamp('expires_at');

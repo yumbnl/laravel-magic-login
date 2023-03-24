@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Yumb\MagicLogin\Enums\TokenStatus;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Helpers\TokenGenerator;
@@ -27,30 +28,30 @@ class MagicLoginToken extends Model
         'token',
         'user_identifier',
         'user_id_type',
+        'status',
         'intended_url',
         'expires_at',
     ];
 
     protected $casts = [
         'user_id_type' => UserIdType::class,
+        'status' => TokenStatus::class,
         'expires_at' => 'datetime',
         'consumed_at' => 'datetime',
     ];
 
+    public function expire(): bool
+    {
+        $this->consumed_at = Carbon::now();
+
+        return $this->save();
+    }
+
     protected static function booted(): void
     {
         static::creating(function (MagicLoginToken $login_token) {
-            if (! isset($login_token->token)) {
-                $login_token->token = (new TokenGenerator)->getToken();
-            }
-
-            if (! isset($login_token->user_id_type)) {
-                $login_token->user_id_type = UserIdType::EMAIL();
-            }
-
-            if (! isset($login_token->expires_at)) {
-                $login_token->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
-            }
+            $login_token->setToken();
+            $login_token->setExpiresAt();
         });
 
         static::created(function (MagicLoginToken $login_token) {
@@ -58,19 +59,22 @@ class MagicLoginToken extends Model
         });
 
         static::updating(function (MagicLoginToken $login_token) {
-            if (! isset($login_token->token)) {
-                $login_token->token = (new TokenGenerator)->getToken();
-            }
-
-            if (! isset($login_token->user_id_type)) {
-                $login_token->user_id_type = UserIdType::EMAIL();
-            }
-
-            if (! isset($login_token->expires_at)) {
-                $login_token->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
-            }
+            $login_token->setToken();
+            $login_token->setExpiresAt();
 
             TokenRequestedEvent::dispatch($login_token);
         });
+    }
+
+    private function setToken(): void
+    {
+        if (! isset($this->token))
+            $this->token = (new TokenGenerator)->getToken();
+    }
+
+    private function setExpiresAt(): void
+    {
+        if (! isset($this->expires_at))
+            $this->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
     }
 }
