@@ -7,6 +7,9 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Yumb\MagicLogin\Commands\MagicLoginCommand;
 use Yumb\MagicLogin\Http\Controllers\RequestTokenController;
+use Yumb\MagicLogin\Http\Controllers\VerifyTokenController;
+use Yumb\MagicLogin\Http\Controllers\RevokeTokenController;
+
 
 class MagicLoginServiceProvider extends PackageServiceProvider
 {
@@ -27,7 +30,13 @@ class MagicLoginServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        Route::post('magic-login/token-request', RequestTokenController::class)
+        Route::post('magic-login/request-token', RequestTokenController::class)
             ->name('magictoken.request');
+
+        Route::post('magic-token/verify-token', VerifyTokenController::class)
+            ->name('magictoken.verify');
+
+        Route::post('magic-login/revoke-token', RevokeTokenController::class)
+            ->name('magictoken.revoke');
     }
 }
