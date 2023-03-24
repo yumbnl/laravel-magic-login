@@ -16,8 +16,8 @@ use Yumb\MagicLogin\Helpers\TokenGenerator;
  *
  * @property string $token
  * @property string $user_identifier
- * @property string $user_id_type
- * @property string $status
+ * @property UserIdType $user_id_type
+ * @property TokenStatus $status
  * @property string $intended_url
  * @property Carbon $expires_at
  * @property Carbon $consumed_at

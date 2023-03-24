@@ -39,7 +39,7 @@ class MagicLogin
         return TokenStatus::VALID;
     }
 
-    public function validateUserId($login_token): bool
+    public function validateUserId(MagicLoginToken $login_token): bool
     {
         $userModel = config('magic-login.user_model');
 
@@ -47,5 +47,17 @@ class MagicLogin
             config('magic-login.id_type_cols.'.$login_token->user_id_type->value),
             $login_token->user_identifier
         )->exists();
+    }
+
+    public function getPersonalAccessToken(MagicLoginToken $login_token, string $device_id): string
+    {
+        $userModel = config('magic-login.user_model');
+
+        $user = $userModel::where(
+            config('magic-login.id_type_cols.'.$login_token->user_id_type),
+            $login_token->user_identifier
+        )->first();
+
+        return $user->createToken($device_id)->plainTextToken;
     }
 }
