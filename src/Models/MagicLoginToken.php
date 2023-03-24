@@ -68,13 +68,15 @@ class MagicLoginToken extends Model
 
     private function setToken(): void
     {
-        if (! isset($this->token))
+        if (! isset($this->token)) {
             $this->token = (new TokenGenerator)->getToken();
+        }
     }
 
     private function setExpiresAt(): void
     {
-        if (! isset($this->expires_at))
+        if (! isset($this->expires_at)) {
             $this->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
+        }
     }
 }

@@ -26,14 +26,14 @@ return new class extends Migration
             $table->string('user_identifier');
             $table->enum('user_id_type', [
                 UserIdType::EMAIL(),
-                UserIdType::SMS()
+                UserIdType::SMS(),
             ])->default(UserIdType::EMAIL());
             $table->enum('status', [
                 TokenStatus::FRESH(),
                 TokenStatus::VALID(),
                 TokenStatus::INVALID(),
                 TokenStatus::INVALID_USERID(),
-                TokenStatus::EXPIRED()
+                TokenStatus::EXPIRED(),
             ])->default(TokenStatus::FRESH());
             $table->string('intended_url')->nullable();
             $table->timestamp('consumed_at')->nullable();

@@ -7,7 +7,7 @@ return [
     'user_model' => 'App\Models\User',
     'id_type_cols' => [
         UserIdType::EMAIL() => 'email',
-        UserIdType::SMS() => 'phone'
+        UserIdType::SMS() => 'phone',
     ],
     'token_length' => 5,
     'token_expires_after' => 15, // Minutes

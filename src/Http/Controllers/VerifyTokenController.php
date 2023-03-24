@@ -3,8 +3,8 @@
 namespace Yumb\MagicLogin\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Yumb\MagicLogin\Http\Requests\VerifyTokenRequest;
 use Yumb\MagicLogin\Facades\MagicLogin;
+use Yumb\MagicLogin\Http\Requests\VerifyTokenRequest;
 use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class VerifyTokenController extends BaseController
@@ -20,8 +20,9 @@ class VerifyTokenController extends BaseController
 
         $token_status = MagicLogin::verifyToken($login_token);
 
-        if( ! $token_status->isValid() )
+        if (! $token_status->isValid()) {
             $token_status->throwError();
+        }
 
         // $token = $user->createToken('SPROUTCLOUD-APP')->plainTextToken;
 
