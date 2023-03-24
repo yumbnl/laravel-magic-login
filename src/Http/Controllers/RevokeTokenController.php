@@ -15,7 +15,9 @@ class RevokeTokenController extends BaseController
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        /** @var \Laravel\Sanctum\PersonalAccessToken $token */
+        $token = request()->user()->currentAccessToken();
+        $token->delete();
 
         return response()->json([
             'status' => 'revoked',
