@@ -25,7 +25,7 @@ class VerifyTokenController extends BaseController
 
         $status = MagicLogin::verifyToken($login_token);
 
-        if ($status->isVerified()) {
+        if ($status->isValid()) {
             $login_token->consume();
         }
 
