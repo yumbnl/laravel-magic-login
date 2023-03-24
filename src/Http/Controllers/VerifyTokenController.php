@@ -25,16 +25,18 @@ class VerifyTokenController extends BaseController
 
         $status = MagicLogin::verifyToken($login_token);
 
-        if ($status->isValid())
+        if ($status->isValid()) {
             $login_token->consume();
+        }
 
-        if($request->expectsJson())
+        if ($request->expectsJson()) {
             return response()->json([
-                'token' => MagicLogin::getPersonalAccessToken($login_token, $request->device_name)
+                'token' => MagicLogin::getPersonalAccessToken($login_token, $request->device_name),
             ]);
-        
+        }
+
         $request->session()->regenerate();
- 
+
         return redirect()->intended($login_token->intended_url);
     }
 }
