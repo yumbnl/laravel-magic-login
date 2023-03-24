@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class RevokeTokenController extends BaseController
 {
@@ -15,9 +16,7 @@ class RevokeTokenController extends BaseController
 
     public function __invoke(Request $request): JsonResponse
     {
-        /** @var \Laravel\Sanctum\PersonalAccessToken $token */
-        $token = request()->user()->currentAccessToken();
-        $token->delete();
+        request()->user()->currentAccessToken()->delete(); // @phpstan-ignore-line
 
         return response()->json([
             'status' => 'revoked',
