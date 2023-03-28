@@ -33,7 +33,7 @@ class TestCase extends Orchestra
         // Use test User model for users provider
         $app['config']->set('magic-login.user_model', User::class);
 
-        $migration = include __DIR__.'/../database/migrations/2023_03_22_085913_create_magic_login_tokens_table.php';
+        $migration = include __DIR__.'/../database/migrations/create_laravel-magic-login_table.php.stub';
         $migration->up();
 
         $schema = $app['db']->connection()->getSchemaBuilder();
