@@ -33,6 +33,7 @@ return new class extends Migration
                 TokenStatus::VALID(),
                 TokenStatus::INVALID(),
                 TokenStatus::INVALID_USERID(),
+                TokenStatus::CONSUMED(),
                 TokenStatus::EXPIRED(),
             ])->default(TokenStatus::FRESH());
             $table->string('intended_url')->nullable();

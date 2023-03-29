@@ -16,7 +16,7 @@ class VerifyTokenController extends BaseController
 
         $login_token = MagicLoginToken::where([
             ['token', $validated['token']],
-            ['user_udentifier', $validated['user_identifier']],
+            ['user_identifier', $validated['user_identifier']],
         ])
                         ->latest()
                         ->first();
