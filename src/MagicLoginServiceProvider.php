@@ -37,8 +37,10 @@ class MagicLoginServiceProvider extends PackageServiceProvider
                 Route::post('/verify', VerifyTokenController::class)
                     ->name('magictoken.verify');
 
-                Route::post('/revoke', RevokeTokenController::class)
-                    ->name('magictoken.revoke');
+                Route::middleware('auth:sanctum')->group(function () {
+                    Route::post('/revoke', RevokeTokenController::class)
+                        ->name('magictoken.revoke');
+                });
             });
         });
     }
