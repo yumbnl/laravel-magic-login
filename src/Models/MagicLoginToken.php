@@ -6,11 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Yumb\MagicLogin\Enums\TokenStatus;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Helpers\TokenGenerator;
-use Illuminate\Support\Facades\URL;
 
 /**
  * Yumb\MagicLogin\Models\MagicLoginToken
