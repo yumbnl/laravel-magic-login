@@ -4,6 +4,7 @@ namespace Yumb\MagicLogin;
 
 use Yumb\MagicLogin\Enums\TokenStatus;
 use Yumb\MagicLogin\Enums\UserIdType;
+use Yumb\MagicLogin\Exceptions\ConsumedTokenException;
 use Yumb\MagicLogin\Exceptions\ExpiredTokenException;
 use Yumb\MagicLogin\Exceptions\InvalidUserIdException;
 use Yumb\MagicLogin\Models\MagicLoginToken;
@@ -22,6 +23,9 @@ class MagicLogin
 
     public function verifyToken(MagicLoginToken $login_token): TokenStatus
     {
+        if($login_token->status->isConsumed())
+            throw new ConsumedTokenException;
+
         if ($login_token->expires_at->isPast()) {
             $login_token->status = TokenStatus::EXPIRED;
             $login_token->save();
@@ -49,7 +53,7 @@ class MagicLogin
         )->exists();
     }
 
-    public function getPersonalAccessToken(MagicLoginToken $login_token, string $device_id): string
+    public function getPersonalAccessToken(MagicLoginToken $login_token, string $device_id = null): string
     {
         $userModel = config('magic-login.user_model');
 
@@ -57,6 +61,8 @@ class MagicLogin
             config('magic-login.id_type_cols.'.$login_token->user_id_type->value),
             $login_token->user_identifier
         )->first();
+
+        $device_id = $device_id ?? 'UnknownDevice-'.fake()->randomDigitNotZero();
 
         return $user->createToken($device_id)->plainTextToken;
     }

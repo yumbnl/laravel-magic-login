@@ -18,8 +18,8 @@ class VerifyTokenController extends BaseController
             ['token', $validated['token']],
             ['user_identifier', $validated['user_identifier']],
         ])
-                        ->latest()
-                        ->first();
+            ->latest()
+            ->first();
 
         throw_if(! $login_token->exists, InvalidTokenException::class);
 
@@ -31,7 +31,7 @@ class VerifyTokenController extends BaseController
 
         if ($request->expectsJson()) {
             return response()->json([
-                'token' => MagicLogin::getPersonalAccessToken($login_token, $request->device_name),
+                'token' => MagicLogin::getPersonalAccessToken($login_token, request()->device_name),
             ]);
         }
 
