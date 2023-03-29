@@ -50,7 +50,7 @@ class MagicLoginToken extends Model
             'magictoken.verify',
             $this->expires_at,
             [
-                'email' => $this->email,
+                'user_identifier' => $this->user_identifier,
                 'token' => $this->token,
             ]
         );
