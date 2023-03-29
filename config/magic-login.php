@@ -19,7 +19,7 @@ return [
         'magictoken' => [
             'request' => 'magic-login/request-token',
             'verify' => 'magic-token/verify-token',
-            'revoke' => 'magic-login/revoke-token'
-        ]
-    ]
+            'revoke' => 'magic-login/revoke-token',
+        ],
+    ],
 ];

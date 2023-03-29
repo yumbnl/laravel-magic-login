@@ -24,7 +24,7 @@ class MagicLoginServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             // ->hasViews()
             ->hasMigration('create_laravel-magic-login_table');
-            // ->hasCommand(MagicLoginCommand::class);
+        // ->hasCommand(MagicLoginCommand::class);
     }
 
     public function packageRegistered()
