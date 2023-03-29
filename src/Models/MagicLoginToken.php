@@ -52,19 +52,12 @@ class MagicLoginToken extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (MagicLoginToken $login_token) {
+        static::saving(function (MagicLoginToken $login_token) {
             $login_token->setToken();
             $login_token->setExpiresAt();
         });
 
-        static::created(function (MagicLoginToken $login_token) {
-            TokenRequestedEvent::dispatch($login_token);
-        });
-
-        static::updating(function (MagicLoginToken $login_token) {
-            $login_token->setToken();
-            $login_token->setExpiresAt();
-
+        static::saved(function (MagicLoginToken $login_token) {
             TokenRequestedEvent::dispatch($login_token);
         });
     }
@@ -78,8 +71,6 @@ class MagicLoginToken extends Model
 
     private function setExpiresAt(): void
     {
-        if (! isset($this->expires_at)) {
-            $this->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
-        }
+        $this->expires_at = Carbon::now()->addMinutes(config('magic-login.token_expires_after'));
     }
 }
