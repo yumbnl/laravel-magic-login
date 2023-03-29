@@ -34,9 +34,9 @@ it('dispatches an event when token has been requested', function () {
     Event::fake([TokenRequestedEvent::class]);
 
     $email = fake()->email();
-    $this->post(
-        '/magic-login/request',
-        ['user_identifier' => $email]
+
+    MagicLogin::createToken(
+        $email
     );
 
     Event::assertDispatched(TokenRequestedEvent::class, function ($e) use ($email) {
