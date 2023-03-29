@@ -6,5 +6,5 @@ return [
     'body_2' => 'Of vul deze code in:',
     'body_3' => 'Heb je nog vragen, laat het gerust even weten!',
     'button_label' => 'Klik hier om in te loggen',
-    'subcopy' => 'Deze link en code zijn 15 minuten geldig.'
+    'subcopy' => 'Deze link en code zijn 15 minuten geldig.',
 ];

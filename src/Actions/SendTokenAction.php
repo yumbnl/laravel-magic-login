@@ -2,10 +2,9 @@
 
 namespace Yumb\MagicLogin\Actions;
 
-use Yumb\MagicLogin\Events\SendTokenEmailEvent;
-use Yumb\MagicLogin\Models\MagicLoginToken;
 use Illuminate\Support\Facades\Mail;
 use Yumb\MagicLogin\Mail\LoginTokenMail;
+use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class SendTokenAction
 {

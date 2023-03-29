@@ -28,7 +28,6 @@ class MagicLoginServiceProvider extends PackageServiceProvider
             ->hasCommand(MagicLoginCommand::class);
 
         $this->app->register(MagicEventsServiceProvider::class);
-
     }
 
     public function packageRegistered()
