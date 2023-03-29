@@ -10,6 +10,7 @@ use Yumb\MagicLogin\Enums\TokenStatus;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Helpers\TokenGenerator;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Yumb\MagicLogin\Models\MagicLoginToken
@@ -42,6 +43,18 @@ class MagicLoginToken extends Model
         'expires_at' => 'datetime',
         'consumed_at' => 'datetime',
     ];
+
+    public function getLoginLinkAttribute()
+    {
+        return URL::temporarySignedRoute(
+            'magictoken.verify',
+            $this->expires_at,
+            [
+                'email' => $this->email,
+                'token' => $this->token,
+            ]
+        );
+    }
 
     public function consume()
     {
