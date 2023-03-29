@@ -29,22 +29,17 @@ class MagicLoginServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        Route::macro('magic-login', function(string $baseUrl = 'magic-login') {
-
+        Route::macro('magic-login', function (string $baseUrl = 'magic-login') {
             Route::prefix($baseUrl)->group(function () {
-
                 Route::post('/request', RequestTokenController::class)
                     ->name('magictoken.request');
 
                 Route::post('/verify', VerifyTokenController::class)
                     ->name('magictoken.verify');
-        
+
                 Route::post('/revoke', RevokeTokenController::class)
                     ->name('magictoken.revoke');
-
             });
-            
         });
-
     }
 }
