@@ -28,6 +28,8 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
+        config()->set('mail.default', 'array');
+        
         config()->set('database.default', 'testing');
 
         // Use test User model for users provider
