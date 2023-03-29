@@ -35,7 +35,7 @@ it('dispatches an event when token has been requested', function () {
 
     $email = fake()->email();
     $this->post(
-        route('magictoken.request'),
+        '/magic-login/request',
         ['user_identifier' => $email]
     );
 

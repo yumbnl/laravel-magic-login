@@ -15,11 +15,4 @@ return [
     'listeners' => [
         'TokenRequestedEvent' => SendTokenAction::class,
     ],
-    'urls' => [
-        'magictoken' => [
-            'request' => 'magic-login/request-token',
-            'verify' => 'magic-token/verify-token',
-            'revoke' => 'magic-login/revoke-token',
-        ],
-    ],
 ];

@@ -22,20 +22,29 @@ class MagicLoginServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-magic-login')
             ->hasConfigFile()
-            // ->hasViews()
-            ->hasMigration('create_laravel-magic-login_table');
-        // ->hasCommand(MagicLoginCommand::class);
+            ->hasViews()
+            ->hasMigration('create_laravel-magic-login_table')
+            ->hasCommand(MagicLoginCommand::class);
     }
 
     public function packageRegistered()
     {
-        Route::post(config('magic-login.urls.magictoken.request'), RequestTokenController::class)
-            ->name('magictoken.request');
+        Route::macro('magic-login', function(string $baseUrl = 'magic-login') {
 
-        Route::post(config('magic-login.urls.magictoken.request'), VerifyTokenController::class)
-            ->name('magictoken.verify');
+            Route::prefix($baseUrl)->group(function () {
 
-        Route::post(config('magic-login.urls.magictoken.request'), RevokeTokenController::class)
-            ->name('magictoken.revoke');
+                Route::post('/request', RequestTokenController::class)
+                    ->name('magictoken.request');
+
+                Route::post('/verify', VerifyTokenController::class)
+                    ->name('magictoken.verify');
+        
+                Route::post('/revoke', RevokeTokenController::class)
+                    ->name('magictoken.revoke');
+
+            });
+            
+        });
+
     }
 }
