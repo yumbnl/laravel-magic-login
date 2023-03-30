@@ -29,7 +29,6 @@ it('creates a login token with correct amount of characters', function () {
 });
 
 it('dispatches an event when token has been requested', function () {
-
     Event::fake([TokenRequestedEvent::class]);
 
     $email = fake()->email();
