@@ -17,8 +17,10 @@ class RevokeTokenController extends BaseController
     {
         request()->user()->currentAccessToken()->delete(); // @phpstan-ignore-line
 
-        return response()->json([
-            'status' => 'revoked',
-        ]);
+        $response = ['revoked' => true];
+        
+        return ($request->expectsJson())
+                ? response()->json($response)
+                : back()->with($response);
     }
 }

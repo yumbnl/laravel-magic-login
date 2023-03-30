@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Facades\MagicLogin;
@@ -15,7 +16,7 @@ class RequestTokenController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function __invoke(RequestTokenRequest $request): JsonResponse
+    public function __invoke(RequestTokenRequest $request): JsonResponse|RedirectResponse
     {
         $validated = $request->validated();
 
@@ -25,8 +26,10 @@ class RequestTokenController extends BaseController
             $validated['intended_url'] ?? '/'
         );
 
-        return response()->json([
-            'requested' => true,
-        ]);
+        $response = ['requested' => true];
+        
+        return ($request->expectsJson())
+                ? response()->json($response)
+                : back()->with($response);
     }
 }
