@@ -27,7 +27,7 @@ class RequestTokenController extends BaseController
         );
 
         $response = ['requested' => true];
-        
+
         return ($request->expectsJson())
                 ? response()->json($response)
                 : back()->with($response);

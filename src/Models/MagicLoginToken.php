@@ -72,8 +72,9 @@ class MagicLoginToken extends Model
         });
 
         static::saved(function (MagicLoginToken $login_token) {
-            if($login_token->status->isFresh())
+            if ($login_token->status->isFresh()) {
                 TokenRequestedEvent::dispatch($login_token);
+            }
         });
     }
 

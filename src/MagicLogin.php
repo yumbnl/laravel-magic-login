@@ -23,8 +23,9 @@ class MagicLogin
 
     public function verifyToken(MagicLoginToken $login_token): TokenStatus
     {
-        if($login_token->status->isConsumed())
+        if ($login_token->status->isConsumed()) {
             throw new ConsumedTokenException;
+        }
 
         if ($login_token->expires_at->isPast()) {
             $login_token->status = TokenStatus::EXPIRED;
