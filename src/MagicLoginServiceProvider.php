@@ -32,17 +32,27 @@ class MagicLoginServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        Route::macro('magiclogin', function (string $baseUrl = 'magic-login') {
+        Route::macro('MagicLoginWeb', function (string $baseUrl = 'magic-login-web') {
             Route::prefix($baseUrl)->group(function () {
                 Route::post('/request', RequestTokenController::class)
-                    ->name('magictoken.request');
+                    ->name('magictoken.web.request');
+
+                Route::get('/verify', VerifyTokenController::class)
+                    ->name('magictoken.web.verify');
+            });
+        });
+
+        Route::macro('MagicLoginApi', function (string $baseUrl = 'magic-login-api') {
+            Route::prefix($baseUrl)->group(function () {
+                Route::post('/request', RequestTokenController::class)
+                    ->name('magictoken.api.request');
 
                 Route::post('/verify', VerifyTokenController::class)
-                    ->name('magictoken.verify');
+                    ->name('magictoken.api.verify');
 
                 Route::middleware('auth:sanctum')->group(function () {
                     Route::post('/revoke', RevokeTokenController::class)
-                        ->name('magictoken.revoke');
+                        ->name('magictoken.api.revoke');
                 });
             });
         });

@@ -56,15 +56,20 @@ class MagicLogin
 
     public function getPersonalAccessToken(MagicLoginToken $login_token, string $device_id = null): string
     {
-        $userModel = config('magic-login.user_model');
-
-        $user = $userModel::where(
-            config('magic-login.id_type_cols.'.$login_token->user_id_type->value),
-            $login_token->user_identifier
-        )->first();
+        $user = $this->getUserFromToken($login_token);
 
         $device_id = $device_id ?? 'UnknownDevice-'.fake()->randomDigitNotZero();
 
         return $user->createToken($device_id)->plainTextToken;
+    }
+
+    public function getUserFromToken(MagicLoginToken $login_token)
+    {
+        $userModel = config('magic-login.user_model');
+
+        return $userModel::where(
+            config('magic-login.id_type_cols.'.$login_token->user_id_type->value),
+            $login_token->user_identifier
+        )->first();
     }
 }

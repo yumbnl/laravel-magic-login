@@ -5,6 +5,6 @@ use Yumb\MagicLogin\Tests\TestCase;
 
 uses(TestCase::class)
     ->beforeEach(function () {
-        Route::magiclogin();
+        Route::MagicLoginWeb();
     })
     ->in(__DIR__);

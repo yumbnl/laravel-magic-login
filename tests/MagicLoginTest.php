@@ -29,12 +29,12 @@ it('creates a login token with correct amount of characters', function () {
 });
 
 it('dispatches an event when token has been requested', function () {
-    $this->withoutExceptionHandling();
 
     Event::fake([TokenRequestedEvent::class]);
 
     $email = fake()->email();
-    $this->post(route('magictoken.request'), ['email' => $email]);
+
+    $this->post(route('magictoken.web.request'), ['email' => $email]);
 
     Event::assertDispatched(TokenRequestedEvent::class, function ($e) use ($email) {
         return $e->login_token->user_identifier === $email;

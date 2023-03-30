@@ -47,7 +47,7 @@ class MagicLoginToken extends Model
     public function getLoginLinkAttribute()
     {
         return URL::temporarySignedRoute(
-            'magictoken.verify',
+            'magictoken.web.verify',
             $this->expires_at,
             [
                 'user_identifier' => $this->user_identifier,

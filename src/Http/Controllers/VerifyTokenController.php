@@ -14,6 +14,10 @@ class VerifyTokenController extends BaseController
     {
         $validated = $request->validated();
 
+        if (! request()->manual && ! request()->hasValidSignature()) {
+            abort(401);
+        }
+
         $login_token = MagicLoginToken::where([
             ['token', $validated['token']],
             ['user_identifier', $validated['user_identifier']],
@@ -21,7 +25,7 @@ class VerifyTokenController extends BaseController
             ->latest()
             ->first();
 
-        throw_if(! $login_token->exists, InvalidTokenException::class);
+        throw_if( empty($login_token->exists), InvalidTokenException::class);
 
         $status = MagicLogin::verifyToken($login_token);
 
@@ -35,7 +39,9 @@ class VerifyTokenController extends BaseController
             ]);
         }
 
-        $request->session()->regenerate();
+        $user = MagicLogin::getUserFromToken($login_token);
+
+        auth()->login($user);
 
         return redirect()->intended($login_token->intended_url);
     }
