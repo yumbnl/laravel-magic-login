@@ -93,7 +93,7 @@ class MagicLoginToken extends Model
     private function setStatus(): void
     {
         if (! isset($this->status)) {
-            $this->status = TokenStatus::FRESH();
+            $this->status = TokenStatus::FRESH;
         }
     }
 }
