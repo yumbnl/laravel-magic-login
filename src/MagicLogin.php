@@ -24,11 +24,11 @@ class MagicLogin
     public function getToken(string $user_identifier, string|null $user_id_type = null)
     {
         $id_type = $user_id_type ?? UserIdType::EMAIL();
-        
+
         return MagicLoginToken::where(
-                'user_identifier',
-                $user_identifier
-            )
+            'user_identifier',
+            $user_identifier
+        )
             ->first();
     }
 
