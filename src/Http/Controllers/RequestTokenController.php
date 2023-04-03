@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response;
 use Yumb\MagicLogin\Enums\UserIdType;
 use Yumb\MagicLogin\Facades\MagicLogin;
 use Yumb\MagicLogin\Http\Requests\RequestTokenRequest;
@@ -29,7 +30,7 @@ class RequestTokenController extends BaseController
         $response = ['requested' => true];
 
         return ($request->expectsJson())
-                ? response()->json($response)
+                ? response()->json($response, Response::HTTP_ACCEPTED)
                 : back()->with($response);
     }
 }
