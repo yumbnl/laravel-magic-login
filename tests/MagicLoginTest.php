@@ -2,13 +2,17 @@
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertIsString;
-use function PHPUnit\Framework\assertTrue;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpFoundation\Response;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Exceptions\ExpiredTokenException;
 use Yumb\MagicLogin\Facades\MagicLogin;
+use Yumb\MagicLogin\Mail\LoginTokenMail;
 use Yumb\MagicLogin\Tests\TestModels\User;
+
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertIsString;
+use function PHPUnit\Framework\assertTrue;
 
 it('can create a login token for a user with given email', function () {
     $email = fake()->email();
@@ -31,12 +35,38 @@ it('creates a login token with correct amount of characters', function () {
 it('dispatches an event when token has been requested', function () {
     Event::fake([TokenRequestedEvent::class]);
 
-    $email = fake()->email();
+    $user = User::create(['email' => fake()->email()]);
 
-    $this->post(route('magictoken.web.request'), ['email' => $email]);
+    $response = $this->post(route('magictoken.web.request'), ['email' => $user->email]);
 
-    Event::assertDispatched(TokenRequestedEvent::class, function ($e) use ($email) {
-        return $e->login_token->user_identifier === $email;
+    Event::assertDispatched(TokenRequestedEvent::class, function ($e) use ($user) {
+        return $e->login_token->user_identifier === $user->email;
+    });
+});
+
+it('sends login token email when token has been requested', function () {
+    Mail::fake();
+
+    $user = User::create(['email' => fake()->email()]);
+
+    $this->postJson(route('magictoken.api.request'), ['email' => $user->email])
+        ->assertStatus(Response::HTTP_ACCEPTED);
+
+    Mail::assertQueued(LoginTokenMail::class, function ($mail) use ($user) {
+        return $mail->hasTo($user->email);
+    });
+});
+
+it('will not send out an email when requesting login for non-existing user', function () {
+    Mail::fake();
+
+    $email = 'fake@nodomain.com';
+
+    $this->postJson(route('magictoken.api.request'), ['email' => $email])
+        ->assertStatus(Response::HTTP_FORBIDDEN);
+
+    Mail::assertNotQueued(LoginTokenMail::class, function ($mail) use ($email) {
+        return $mail->hasTo($email);
     });
 });
 

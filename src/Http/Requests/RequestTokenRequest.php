@@ -3,12 +3,18 @@
 namespace Yumb\MagicLogin\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Yumb\MagicLogin\Enums\UserIdType;
 
 class RequestTokenRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        $userModel = config('magic-login.user_model');
+        
+        return $userModel::where(
+            config('magic-login.id_type_cols.'.$this->user_id_type),
+            $this->user_identifier
+        )->exists();
     }
 
     public function rules(): array
@@ -27,14 +33,14 @@ class RequestTokenRequest extends FormRequest
         if (! isset($this->user_identifier) && isset($this->email)) {
             $this->merge([
                 'user_identifier' => $this->email,
-                'user_id_type' => 'email',
+                'user_id_type' => UserIdType::EMAIL(),
             ]);
         }
 
         if (! isset($this->user_identifier) && isset($this->phone)) {
             $this->merge([
                 'user_identifier' => $this->phone,
-                'user_id_type' => 'sms',
+                'user_id_type' => UserIdType::SMS(),
             ]);
         }
     }
