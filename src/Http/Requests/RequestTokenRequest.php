@@ -10,7 +10,7 @@ class RequestTokenRequest extends FormRequest
     public function authorize(): bool
     {
         $userModel = config('magic-login.user_model');
-        
+
         return $userModel::where(
             config('magic-login.id_type_cols.'.$this->user_id_type),
             $this->user_identifier

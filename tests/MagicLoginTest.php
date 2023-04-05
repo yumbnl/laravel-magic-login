@@ -3,16 +3,15 @@
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertIsString;
+use function PHPUnit\Framework\assertTrue;
 use Symfony\Component\HttpFoundation\Response;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
 use Yumb\MagicLogin\Exceptions\ExpiredTokenException;
 use Yumb\MagicLogin\Facades\MagicLogin;
 use Yumb\MagicLogin\Mail\LoginTokenMail;
 use Yumb\MagicLogin\Tests\TestModels\User;
-
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertIsString;
-use function PHPUnit\Framework\assertTrue;
 
 it('can create a login token for a user with given email', function () {
     $email = fake()->email();
