@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-magic-login` will be documented in this file.
 
+## Fixes auth check for TokenRequest - 2023-04-12
+
+With this new feature we want to allow TokenRequests for non-existing User's.
+When this feature is disabled, it will abort with 403 statuscode in the controller.
+
 ## 1.2.0 - 2023-04-12
 
 Adds Magic auto User creation upon TokenRequest, when no User has been found.
