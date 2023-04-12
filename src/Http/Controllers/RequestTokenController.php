@@ -20,6 +20,25 @@ class RequestTokenController extends BaseController
     {
         $validated = $request->validated();
 
+        $userModel = config('magic-login.user_model');
+
+        $user = $userModel::where(
+            config('magic-login.id_type_cols.'.$validated['user_id_type']),
+            $validated['user_identifier']
+        )->first();
+
+        if(! $user && config('magic-login.magic_new_user') )
+        {
+            $name = ($validated['user_id_type'] === UserIdType::EMAIL())
+                ? ucfirst(substr($validated['user_identifier'], 0, strrpos($validated['user_identifier'], '@')))
+                : config('magic-login.default_user_name');
+
+            $userModel::create([
+                'name' => $name,
+                'email' => $validated['user_identifier'], // TODO: add other types
+            ]);
+        }
+
         MagicLogin::createToken(
             $validated['user_identifier'],
             $validated['user_id_type'] ?? UserIdType::EMAIL(),

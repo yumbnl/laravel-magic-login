@@ -5,6 +5,8 @@ use Yumb\MagicLogin\Enums\UserIdType;
 
 return [
     'user_model' => 'App\Models\User',
+    'default_user_name' => 'New User',
+    'magic_new_user' => true,
     'id_type_cols' => [
         UserIdType::EMAIL() => 'email',
         UserIdType::SMS() => 'phone',
