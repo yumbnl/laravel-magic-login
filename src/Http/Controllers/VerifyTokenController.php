@@ -25,7 +25,7 @@ class VerifyTokenController extends BaseController
             ->latest()
             ->first();
 
-        throw_if( empty($login_token->exists), InvalidTokenException::class);
+        throw_if(empty($login_token->exists), InvalidTokenException::class);
 
         $status = MagicLogin::verifyToken($login_token);
 
