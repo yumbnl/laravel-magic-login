@@ -28,7 +28,10 @@ class RequestTokenController extends BaseController
             $validated['user_identifier']
         )->first();
 
-        if (! $user && config('magic-login.magic_new_user')) {
+        if (! $user && !config('magic-login.magic_new_user'))
+            abort(403);
+
+        else if (! $user && config('magic-login.magic_new_user')) {
             $name = ($validated['user_id_type'] === UserIdType::EMAIL())
                 ? ucfirst(substr($validated['user_identifier'], 0, strrpos($validated['user_identifier'], '@')))
                 : config('magic-login.default_user_name');
