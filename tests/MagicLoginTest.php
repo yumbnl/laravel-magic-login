@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsString;
+use function PHPUnit\Framework\assertNotNull;
 use function PHPUnit\Framework\assertTrue;
 use Symfony\Component\HttpFoundation\Response;
 use Yumb\MagicLogin\Events\TokenRequestedEvent;
@@ -56,15 +57,19 @@ it('sends login token email when token has been requested', function () {
     });
 });
 
-it('will not send out an email when requesting login for non-existing user', function () {
+it('will create new user when requesting login for non-existing user', function () {
     Mail::fake();
 
     $email = 'fake@nodomain.com';
 
     $this->postJson(route('magictoken.api.request'), ['email' => $email])
-        ->assertStatus(Response::HTTP_FORBIDDEN);
+        ->assertStatus(Response::HTTP_ACCEPTED);
 
-    Mail::assertNotQueued(LoginTokenMail::class, function ($mail) use ($email) {
+    $user = User::whereEmail($email)->first();
+
+    assertNotNull($user);
+
+    Mail::assertQueued(LoginTokenMail::class, function ($mail) use ($email) {
         return $mail->hasTo($email);
     });
 });
