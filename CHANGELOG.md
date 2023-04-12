@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-magic-login` will be documented in this file.
 
+## 1.2.0 - 2023-04-12
+
+Adds Magic auto User creation upon TokenRequest, when no User has been found.
+Currently only supports using Email identification
+
+Adds config options for default User name and option to disable this feature
+
 ## 1.1.0 - 2023-04-05
 
 - RequestTokenRequest now only authorises the request if a User with given user identifier exists
