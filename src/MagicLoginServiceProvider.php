@@ -5,7 +5,7 @@ namespace Yumb\MagicLogin;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Yumb\MagicLogin\Commands\MagicLoginCommand;
+use Yumb\MagicLogin\Commands\TokenCleanupCommand;
 use Yumb\MagicLogin\Http\Controllers\RequestTokenController;
 use Yumb\MagicLogin\Http\Controllers\RevokeTokenController;
 use Yumb\MagicLogin\Http\Controllers\VerifyTokenController;
@@ -25,7 +25,7 @@ class MagicLoginServiceProvider extends PackageServiceProvider
             ->hasViews('magic-login')
             ->hasMigration('create_laravel-magic-login_table')
             ->hasTranslations()
-            ->hasCommand(MagicLoginCommand::class);
+            ->hasCommand(TokenCleanupCommand::class);
 
         $this->app->register(MagicEventsServiceProvider::class);
     }
