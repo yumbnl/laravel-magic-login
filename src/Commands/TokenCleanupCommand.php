@@ -3,8 +3,8 @@
 namespace Yumb\MagicLogin\Commands;
 
 use Illuminate\Console\Command;
-use Yumb\MagicLogin\Models\MagicLoginToken;
 use Yumb\MagicLogin\Enums\TokenStatus;
+use Yumb\MagicLogin\Models\MagicLoginToken;
 
 class TokenCleanupCommand extends Command
 {
@@ -19,10 +19,10 @@ class TokenCleanupCommand extends Command
         $tokens = MagicLoginToken::whereIn('status', [
             TokenStatus::INVALID(),
             TokenStatus::EXPIRED(),
-            TokenStatus::CONSUMED()
-          ])->get();
-          
-        $tokens->each(fn($token) => $token->delete());
+            TokenStatus::CONSUMED(),
+        ])->get();
+
+        $tokens->each(fn ($token) => $token->delete());
 
         $this->comment('This house is clean!');
 

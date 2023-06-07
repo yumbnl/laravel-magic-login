@@ -13,7 +13,7 @@ class SendTokenAction
         if ($login_token->user_id_type->isEmail()) {
             Mail::to($login_token->user_identifier)
                 ->queue((new LoginTokenMail($login_token->login_link, $login_token->token))
-                ->onQueue('mails'));
+                    ->onQueue('mails'));
         }
     }
 }
