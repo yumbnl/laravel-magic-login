@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-magic-login` will be documented in this file.
 
+## 1.2.2 - 2023-06-07
+
+TokenCleanup Command
+
+Adds Artisan command to cleanup Tokens that expired or have been consumed.
+Schedule this command or just run it when you need it.
+
 ## Fixes auth check for TokenRequest - 2023-04-12
 
 With this new feature we want to allow TokenRequests for non-existing User's.
