@@ -20,11 +20,11 @@ class RevokeTokenController extends BaseController
         $request->validate(['logout_all' => 'sometimes|boolean']);
 
         if (isset($request->logout_all)) {
-            $request->user()->tokens()->delete();
-        } // @phpstan-ignore-line
+            $request->user()->tokens()->delete(); // @phpstan-ignore-line
+        } 
         else {
-            $request->user()->currentAccessToken()->delete();
-        } // @phpstan-ignore-line
+            $request->user()->currentAccessToken()->delete(); // @phpstan-ignore-line
+        } 
 
         $response = ['revoked' => true];
 
