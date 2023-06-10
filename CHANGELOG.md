@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-magic-login` will be documented in this file.
 
+## 1.2.3 - 2023-06-10
+
+Minor update to RevokeTokencontroller to optionally support revoking of all tokens, not just the one used on current request.
+
 ## 1.2.2 - 2023-06-07
 
 TokenCleanup Command
